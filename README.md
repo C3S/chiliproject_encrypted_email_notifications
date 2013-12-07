@@ -94,21 +94,21 @@ Configuration
   2. Configure **Global Settings**
     * *NOTICE*: If mail is encryted, no filters are applied to the body
     * Filter emails of non-public projects  
-        'project dependend': Filtering is active for non-public projects, if this module is active for the project  
-        'all': Filtering is active for all non-public projects, regardless of module activation  
-        'none': Filtering is inactive for all non-public projects, regardless of module activation  
+        '*project dependend*': Filtering is active for non-public projects, if this module is active for the project  
+        '*all*': Filtering is active for all non-public projects, regardless of module activation  
+        '*none*': Filtering is inactive for all non-public projects, regardless of module activation  
     * Filter emails of public projects  
-        'project dependend': Filtering is active for public projects, if this module is active for the project  
-        'all': Filtering is active for all public projects, regardless of module activation  
-        'none': Filtering is inactive for all public projects, regardless of module activation  
+        '*project dependend*': Filtering is active for public projects, if this module is active for the project  
+        '*all*': Filtering is active for all public projects, regardless of module activation  
+        '*none*': Filtering is inactive for all public projects, regardless of module activation  
     * Encrypt emails of non-public projects  
-        'project dependend': Encryption is active for non-public projects, if this module is active for the project and user has enabled mail encryption  
-        'all': Encryption is active for non-public projects, regardless of module activation and user setting, if there's a key corresponding to email of user  
-        'none': Encryption is inactive for non-public projects, regardless of module activation  
+        '*project dependend*': Encryption is active for non-public projects, if this module is active for the project and user has enabled mail encryption  
+        '*all*': Encryption is active for non-public projects, regardless of module activation and user setting, if there's a key corresponding to email of user  
+        '*none*': Encryption is inactive for non-public projects, regardless of module activation  
     * Encrypt emails of public projects  
-        'project dependend': Encryption is active for public projects, if this module is active for the project and user has enabled mail encryption  
-        'all': Encryption is active for public projects, regardless of module activation and user setting, if there's a key corresponding to email of user  
-        'none': Encryption is inactive for public projects, regardless of module activation  
+        '*project dependend*': Encryption is active for public projects, if this module is active for the project and user has enabled mail encryption  
+        '*all*': Encryption is active for public projects, regardless of module activation and user setting, if there's a key corresponding to email of user  
+        '*none*': Encryption is inactive for public projects, regardless of module activation  
 
   3. Configure **Available Filters**  
       *Header*: Applies to both filtered and encrypted mails  

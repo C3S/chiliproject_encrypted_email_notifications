@@ -91,8 +91,8 @@ Configuration
         **WARNING**: Don't use a private key here, which should never be compromised, as the secret key is written to the database in cleartext. PGP is just used for secure communication, not secure storage of your data, so if your database got hacked, the secret key does not matter anyway
     * Enter the Password for PGP Private Key for Emailadress of Chiliuser *(neccessary for decryption)*
 
-  2. Configure **Global Settings**
-    * *NOTICE*: If mail is encryted, no filters are applied to the body
+  2. Configure **Global Settings**  
+  *NOTICE*: If mail is encryted, no filters are applied to the body
     * Filter emails of non-public projects  
         '*project dependend*': Filtering is active for non-public projects, if this module is active for the project  
         '*all*': Filtering is active for all non-public projects, regardless of module activation  
@@ -111,10 +111,10 @@ Configuration
         '*none*': Encryption is inactive for public projects, regardless of module activation  
 
   3. Configure **Available Filters**  
-      *Header*: Applies to both filtered and encrypted mails  
-      *Subject*: Applies to both filtered and encrypted mails  
-        *NOTICE*: issue updates by emails might rely on this  
-      *Body*: Applies only to filtered mails  
+  *Header*: Applies to both filtered and encrypted mails  
+  *Subject*: Applies to both filtered and encrypted mails  
+    * *NOTICE*: issue updates by emails might rely on this  
+  *Body*: Applies only to filtered mails  
 
   4. Apply your settings
 

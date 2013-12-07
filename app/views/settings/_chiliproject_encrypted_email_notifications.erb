@@ -1,0 +1,52 @@
+<u><b><%= l(:globalConfiguration)%></b></u><br/><br/>
+<%= l(:filterNonpublic)%> <br>
+<%= select_tag('settings[filterNonpublic]', option_tags = '<option value="project" '+(@settings['filterNonpublic']=="project" ? 'selected="selected"' : '')+'>'+l(:projectDependent)+'</option><option value="all" '+(@settings['filterNonpublic']=="all" ? 'selected="selected"' : '')+'>'+l(:all)+'</option><option value="none" '+(@settings['filterNonpublic']=="none" ? 'selected="selected"' : '')+'>'+l(:none)+'</option>') %> <br/>
+<%= l(:filterPublic)%> <br> 
+<%= select_tag('settings[filterPublic]', option_tags = '<option value="project" '+(@settings['filterPublic']=="project" ? 'selected="selected"' : '')+'>'+l(:projectDependent)+'</option><option value="all" '+(@settings['filterPublic']=="all" ? 'selected="selected"' : '')+'>'+l(:all)+'</option><option value="none" '+(@settings['filterPublic']=="none" ? 'selected="selected"' : '')+'>'+l(:none)+'</option>') %> <br/>
+<%= l(:encryptNonpublic)%> <br> 
+<%= select_tag('settings[encryptNonpublic]', option_tags = '<option value="project" '+(@settings['encryptNonpublic']=="project" ? 'selected="selected"' : '')+'>'+l(:projectDependent)+'</option><option value="all" '+(@settings['encryptNonpublic']=="all" ? 'selected="selected"' : '')+'>'+l(:all)+'</option><option value="none" '+(@settings['encryptNonpublic']=="none" ? 'selected="selected"' : '')+'>'+l(:none)+'</option>') %> <br/>
+<%= l(:encryptPublic)%> <br> 
+<%= select_tag('settings[encryptPublic]', option_tags = '<option value="project" '+(@settings['encryptPublic']=="project" ? 'selected="selected"' : '')+'>'+l(:projectDependent)+'</option><option value="all" '+(@settings['encryptPublic']=="all" ? 'selected="selected"' : '')+'>'+l(:all)+'</option><option value="none" '+(@settings['encryptPublic']=="none" ? 'selected="selected"' : '')+'>'+l(:none)+'</option>') %> <br/>
+
+<br/>
+
+<u><b><%= l(:filterConfiguration)%></b></u><br/><br/>
+
+<b><%= l(:filterConfigurationHeader)%></b><br/>
+<%= check_box_tag('settings[removeHeaderProjectTitle]', @settings['removeHeaderProjectTitle'], @settings['removeHeaderProjectTitle']) %> <%= l(:projecttitle)%> <br/>
+<%= check_box_tag('settings[removeHeaderIssueAuthor]', @settings['removeHeaderIssueAuthor'], @settings['removeHeaderIssueAuthor']) %> <%= l(:issueauthor)%> <br/>
+<%= check_box_tag('settings[removeHeaderIssueAssignee]', @settings['removeHeaderIssueAssignee'], @settings['removeHeaderIssueAssignee']) %> <%= l(:issueassignee)%> <br/>
+
+<b><%= l(:filterConfigurationSubject)%></b><br/>
+<%= check_box_tag('settings[removeSubjectProjectTitle]', @settings['removeSubjectProjectTitle'], @settings['removeSubjectProjectTitle']) %> <%= l(:projecttitle)%> <br/>
+<%= check_box_tag('settings[removeSubjectIssueTracker]', @settings['removeSubjectIssueTracker'], @settings['removeSubjectIssueTracker']) %> <%= l(:issuetracker)%> <br/>
+<%= check_box_tag('settings[removeSubjectIssueStatus]', @settings['removeSubjectIssueStatus'], @settings['removeSubjectIssueStatus']) %> <%= l(:issuestatus)%> <br/>
+<%= check_box_tag('settings[removeSubjectIssueTitle]', @settings['removeSubjectIssueTitle'], @settings['removeSubjectIssueTitle']) %> <%= l(:issuetitle)%> <br/>
+
+<b><%= l(:filterConfigurationBody)%></b><br/>
+<%= check_box_tag('settings[removeBodyProjectTitle]', @settings['removeBodyProjectTitle'], @settings['removeBodyProjectTitle']) %> <%= l(:projecttitle)%> <br/>
+<%= check_box_tag('settings[removeBodyProjectDescription]', @settings['removeBodyProjectDescription'], @settings['removeBodyProjectDescription']) %> <%= l(:projectdescription)%> <br/>
+<%= check_box_tag('settings[removeBodyIssueAuthor]', @settings['removeBodyIssueAuthor'], @settings['removeBodyIssueAuthor']) %> <%= l(:issueauthor)%> <br/>
+<%= check_box_tag('settings[removeBodyIssueDetails]', @settings['removeBodyIssueDetails'], @settings['removeBodyIssueDetails']) %> <%= l(:issuedetails)%> <br/>
+<%= check_box_tag('settings[removeBodyIssueNotes]', @settings['removeBodyIssueNotes'], @settings['removeBodyIssueNotes']) %> <%= l(:issuenotes)%> <br/>
+<%= check_box_tag('settings[removeBodyIssueTitle]', @settings['removeBodyIssueTitle'], @settings['removeBodyIssueTitle']) %> <%= l(:issuetitle)%> <br/>
+<%= check_box_tag('settings[removeBodyIssueAttributes]', @settings['removeBodyIssueAttributes'], @settings['removeBodyIssueAttributes']) %> <%= l(:issueattributes)%> <br/>
+
+<br/>
+
+<u><b><%= l(:pluginConfiguration) %></b></u><br/><br/>
+
+<%= l(:cfEncrypt) %> <br/>
+<%= text_field_tag('settings[cfEncrypt]', @settings['cfEncrypt'], {:size => 3}) %> <br/>
+<%= l(:cfKey) %> <br/>
+<%= text_field_tag('settings[cfKey]', @settings['cfKey'], {:size => 3}) %> <br/>
+<br/>
+<%= l(:filteredMailFooter) %> <br/>
+<%= text_area_tag('settings[filteredMailFooter]', @settings['filteredMailFooter'], {:size => "160x10"}) %> <br/>
+<br/>
+<%= l(:chiliEmail)%> <br/>
+<%= text_field_tag('settings[chiliEmail]', @settings['chiliEmail']) %> <br/>
+<%= l(:chiliPrivateKey)%> <br/>
+<%= text_area_tag('settings[chiliPrivateKey]', @settings['chiliPrivateKey'], {:size => "80x10"}) %> <br/>
+<%= l(:chiliPrivateKeyPwd)%> <br/>
+<%= password_field_tag('settings[chiliPrivateKeyPwd]', @settings['chiliPrivateKeyPwd']) %> <br/>

@@ -1,0 +1,20 @@
+<%= l(:text_issue_updated, :id => "##{@issue.id}", :author => (@filter['BodyIssueAuthor'] ? '' : h(@journal.user) ) ) %>
+
+<% unless @filter['BodyIssueDetails'] %>
+<ul>
+<% for detail in @journal.details %>
+    <li><%= @journal.render_detail(detail, true) %></li>
+<% end %>
+</ul>
+<% end %>
+
+<% unless @filter['BodyIssueNotes'] %>
+<%= textilizable(@journal, :notes, :only_path => false) %>
+<% end %>
+<hr />
+<%= render :partial => "issue_text_html_filtered", :locals => { :issue => @issue, :issue_url => @issue_url } %>
+
+<% unless @filteredMailFooter.blank? %>
+<hr />
+<%= textilizable(@filteredMailFooter) %>
+<% end %>

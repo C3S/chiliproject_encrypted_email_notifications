@@ -1,0 +1,19 @@
+<%= l(:text_issue_updated, :id => "##{@issue.id}", :author => (@filter['BodyIssueAuthor'] ? '' : @journal.user) ) %>
+
+<% unless @filter['BodyIssueDetails'] %>
+<% for detail in @journal.details -%>
+<%= @journal.render_detail(detail, true) %>
+<% end -%>
+<% end %>
+
+<% unless @filter['BodyIssueNotes'] %>
+<%= @journal.notes if @journal.notes? %>
+<% end %>
+----------------------------------------
+<%= render :partial => "issue_text_plain_filtered", :locals => { :issue => @issue, :issue_url => @issue_url } %>
+<% unless @filteredMailFooter.blank? %>
+----------------------------------------
+
+<%= @filteredMailFooter %>
+
+<% end %>

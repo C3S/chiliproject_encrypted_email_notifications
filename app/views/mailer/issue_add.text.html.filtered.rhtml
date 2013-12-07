@@ -1,0 +1,8 @@
+<%= l(:text_issue_added, :id => "##{@issue.id}", :author => (@filter['BodyIssueAuthor'] ? '' : h(@issue.author) ) ) %>
+<hr />
+<%= render :partial => "issue_text_html_filtered", :locals => { :issue => @issue, :issue_url => @issue_url } %>
+
+<% unless @filteredMailFooter.blank? %>
+<hr />
+<%= textilizable(@filteredMailFooter) %>
+<% end %>

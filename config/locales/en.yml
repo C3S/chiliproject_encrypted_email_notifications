@@ -1,0 +1,32 @@
+# English strings go here for Rails i18n
+en:
+  pluginConfiguration: Plugin Configuration
+  cfEncrypt: Custom Field ID of user checkbox for encryption
+  cfKey: Custom Field ID of user longtext containing the PGP Public Key
+  filteredMailFooter: Footer added to filtered Mails
+  chiliEmail: Emailaddress of Chiliuser
+  chiliPrivateKey: PGP Private Key for Emailadress of Chiliuser
+  chiliPrivateKeyPwd: Password for PGP Private Key for Emailadress of Chiliuser
+  globalConfiguration: Global Settings
+  filterNonpublic: Filter emails of non-public projects
+  filterPublic: Filter emails of public projects
+  encryptNonpublic: Encrypt emails of non-public projects
+  encryptPublic: Encrypt emails of public projects
+  all: all
+  none: none
+  projectDependent: project dependent
+  filterConfiguration: Available Filters
+  filterConfigurationHeader: Header
+  filterConfigurationSubject: Subject
+  filterConfigurationBody: Body
+  projecttitle: Project Title
+  projectdescription: Project Description
+  issuetitle: Issue Title
+  issueauthor: Issue Author
+  issueassignee: Issue Assignee
+  issuetracker: Issue Type
+  issuestatus: Issue Status
+  issuenotes: Issue Notes
+  issuedetails: Issue Details
+  issueattributes: Issue Attributes
+  project_module_snail: Chiliproject Encrypted Email Notifications

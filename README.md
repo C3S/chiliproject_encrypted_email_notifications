@@ -6,6 +6,8 @@ A plugin for ChiliProject to enhance the security of email communication by
 * encrypting/decrypting mails with GnuPG
 * filtering content of unencrypted mails 
 
+developed for [C3S - Cultural Commons Collecting Society](https://c3s.cc)
+
 
 Details
 -------

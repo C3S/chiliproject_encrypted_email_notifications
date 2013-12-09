@@ -83,38 +83,33 @@ Configuration
 2. **Configure** the Plugin *(Administration / Plugins : Chiliproject Encrypted Mail Notifications > Configure)*
 
   1. Configure **Plugin Configuration**
-    * Enter the Custom Field ID of "Enable Mail Encryption" *(neccessary for encryption)*
-    * Enter the Custom Field ID of "PGP Public Key" *(neccessary for encryption)*
-    * Enter a message, which is added to the footer of filtered emails (e.g. instructions for encryption)
-    * Enter the Emailaddress of Chiliuser *(neccessary for decryption)*
-    * Enter the PGP Private Key for Emailadress of Chiliuser *(neccessary for decryption)*  
+    * Neccessary for encryption
+      * Custom Field ID of "Enable Mail Encryption"
+      * Custom Field ID of "PGP Public Key"
+    * Neccessary for decryption
+      * Emailaddress of Chiliuser
+      * PGP Private Key for Emailadress of Chiliuser
         **WARNING**: Don't use a private key here, which should never be compromised, as the secret key is written to the database in cleartext. PGP is just used for secure communication, not secure storage of your data, so if your database got hacked, the secret key does not matter anyway
-    * Enter the Password for PGP Private Key for Emailadress of Chiliuser *(neccessary for decryption)*
+      * Password for PGP Private Key for Emailadress of Chiliuser
+    * Optional
+      * Enter a message, which is added to the footer of filtered emails (e.g. instructions for encryption)
 
   2. Configure **Global Settings**  
   *NOTICE*: If mail is encryted, no filters are applied to the body
-    * Filter emails of non-public projects  
-        '*project dependend*': Filtering is active for non-public projects, if this module is active for the project  
-        '*all*': Filtering is active for all non-public projects, regardless of module activation  
-        '*none*': Filtering is inactive for all non-public projects, regardless of module activation  
-    * Filter emails of public projects  
-        '*project dependend*': Filtering is active for public projects, if this module is active for the project  
-        '*all*': Filtering is active for all public projects, regardless of module activation  
-        '*none*': Filtering is inactive for all public projects, regardless of module activation  
-    * Encrypt emails of non-public projects  
-        '*project dependend*': Encryption is active for non-public projects, if this module is active for the project and user has enabled mail encryption  
-        '*all*': Encryption is active for non-public projects, regardless of module activation and user setting, if there's a key corresponding to email of user  
-        '*none*': Encryption is inactive for non-public projects, regardless of module activation  
-    * Encrypt emails of public projects  
-        '*project dependend*': Encryption is active for public projects, if this module is active for the project and user has enabled mail encryption  
-        '*all*': Encryption is active for public projects, regardless of module activation and user setting, if there's a key corresponding to email of user  
-        '*none*': Encryption is inactive for public projects, regardless of module activation  
+    * Filter emails of (non-)public projects  
+        '*project dependend*': Filtering is active for (non-)public projects, if this module is active for the project  
+        '*all*': Filtering is active for all (non-)public projects, regardless of module activation  
+        '*none*': Filtering is inactive for all (non-)public projects, regardless of module activation  
+    * Encrypt emails of (non-)public projects  
+        '*project dependend*': Encryption is active for (non-)public projects, if this module is active for the project and user has enabled mail encryption  
+        '*all*': Encryption is active for (non-)public projects, regardless of module activation and user setting, if there's a key corresponding to email of user in the local keychain  
+        '*none*': Encryption is inactive for (non-)public projects, regardless of module activation
 
   3. Configure **Available Filters**  
-  *Header*: Applies to both filtered and encrypted mails  
-  *Subject*: Applies to both filtered and encrypted mails  
-    * *NOTICE*: issue updates by emails might rely on this  
-  *Body*: Applies only to filtered mails  
+  *NOTICE*: issue updates by email might rely on header/subject
+    * *Header*: Applies to both filtered and encrypted mails  
+    * *Subject*: Applies to both filtered and encrypted mails  
+    * *Body*: Applies only to filtered mails  
 
   4. Apply your settings
 
@@ -131,14 +126,14 @@ Configuration
 4. Save your profile
 
 
-2DO
----
+Possible improvements
+---------------------
 
 * Add RegEx for Custom Field "PGP Public Key" to prevent syntax errors  
   RegEx would be `\^s*?-----BEGIN PGP PUBLIC KEY BLOCK-----.*-----END PGP PUBLIC KEY BLOCK-----\s*?$\m`, but there seem to be no way to enable multiline mode in Custom Field RegEx
 * Add more notification mails affected (e.g. Wiki, etc.)
 * Integrate the Custom Fields into this plugin
-* Add a field "PGP Public Key for Emailadress of Chiliuser" to plugin settings and offer key to user on profile
+* Add a field "PGP Public Key for Emailadress of Chiliuser" to plugin settings and offer key download to user on profile
 * Add option to enforce verification of signature corresponding to user for incoming mails
 * Get Emailadress of Chiliuser from field 'Emission email address' in ChiliProject Settings for 'Email notifications'
 * Test compatibility with Redmine and adjust code, where neccessary

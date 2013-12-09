@@ -88,34 +88,34 @@ Configuration
       * Custom Field ID of "PGP Public Key"
     * Neccessary for decryption
       * Emailaddress of Chiliuser
-      * PGP Private Key for Emailadress of Chiliuser
+      * PGP Private Key for Emailadress of Chiliuser  
         **WARNING**: Don't use a private key here, which should never be compromised, as the secret key is written to the database in cleartext. PGP is just used for secure communication, not secure storage of your data, so if your database got hacked, the secret key does not matter anyway
       * Password for PGP Private Key for Emailadress of Chiliuser
     * Optional
       * Enter a message, which is added to the footer of filtered emails (e.g. instructions for encryption)
 
   2. Configure **Global Settings**  
-  *NOTICE*: If mail is encryted, no filters are applied to the body
-    * Filter emails of (non-)public projects  
-        '*project dependend*': Filtering is active for (non-)public projects, if this module is active for the project  
-        '*all*': Filtering is active for all (non-)public projects, regardless of module activation  
-        '*none*': Filtering is inactive for all (non-)public projects, regardless of module activation  
-    * Encrypt emails of (non-)public projects  
-        '*project dependend*': Encryption is active for (non-)public projects, if this module is active for the project and user has enabled mail encryption  
-        '*all*': Encryption is active for (non-)public projects, regardless of module activation and user setting, if there's a key corresponding to email of user in the local keychain  
-        '*none*': Encryption is inactive for (non-)public projects, regardless of module activation
+    * Filter emails of (non-)public projects:  
+      * *project dependend*: Filtering is active for (non-)public projects, if module is active for the project  
+      * *all*: Filtering is active for all (non-)public projects, regardless of module activation  
+      * *none*: Filtering is inactive for all (non-)public projects, regardless of module activation  
+    * Encrypt emails of (non-)public projects:  
+      * *project dependend*: Encryption is active for (non-)public projects, if module is active for the project and user has enabled mail encryption  
+      * *all*: Encryption is active for (non-)public projects, regardless of module activation and user setting, if there's a key corresponding to email of user in the local keychain  
+      * *none*: Encryption is inactive for (non-)public projects, regardless of module activation
 
   3. Configure **Available Filters**  
-  *NOTICE*: issue updates by email might rely on header/subject
+     *NOTICE*: issue updates by email might rely on header/subject
     * *Header*: Applies to both filtered and encrypted mails  
     * *Subject*: Applies to both filtered and encrypted mails  
     * *Body*: Applies only to filtered mails  
 
   4. Apply your settings
 
-3. Configure Projects
+3. Configure Projects  
+   *NOTICE*: plugin settings may override module activation
   * On *'Administration / Project / Modules'*, check module "Chiliproject Encrypted Mail Notifications" for module activation, where neccessary  
-      *NOTICE*: plugin settings may override the activation
+
 
 ### User
 

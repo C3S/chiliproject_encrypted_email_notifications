@@ -1,3 +1,6 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 module MailHandlerPatch
 
 	def self.included(base) # :nodoc:
@@ -18,6 +21,10 @@ module MailHandlerPatch
 
 			# configuration
 			pgp_inline_filename_extensions = ['.pgp', '.gpg', '.asc']
+			remove_attachments = [
+				'signature.asc', 						#applemail/gpgtools: signature
+				'\w{1}x\w{8}.asc(.pgp|.gpg|.asc)?' 		#thunderbird/enigmail: public key
+			]
 
 			# flags
 			@decryption = import_key_chiliuser.any? ? true : false
@@ -25,6 +32,8 @@ module MailHandlerPatch
 			# regex
 			@regex_pgpmsg = /-----BEGIN PGP MESSAGE-----.*-----END PGP MESSAGE-----/m
 			@regex_pgpext = Regexp.new pgp_inline_filename_extensions * "|" + "$"
+			@regex_remove_attachments = Regexp.new "^" + remove_attachments * "|" + "$"
+			Rails.logger.info "Rexex Attachment: #{@regex_remove_attachments.inspect}"
 
 		end
 
@@ -44,6 +53,8 @@ module MailHandlerPatch
 				case email_encryption(parts)
 				when "PGP/MIME"
 
+					Rails.logger.info "Encryption detected: PGP/MIME"
+
 					# create new mail from encrypted part
 					encrypted_part = parts.detect{|p| p.content_type.include? 'application/octet-stream'}
 					encrypted_body = encrypted_part.body.to_s
@@ -58,8 +69,7 @@ module MailHandlerPatch
 
 					# add plain/text part
 					plain_text_part = decrypted_parts.detect {|p| p.content_type == 'text/plain'}
-					@plain_text_body = plain_text_part.body.to_s
-					@plain_text_body.strip!
+					@plain_text_body = plain_text_part.body.to_s.force_encoding("UTF-8").strip!
 					decrypted_parts.try(:delete, plain_text_part)
 
 					# add attachments
@@ -74,8 +84,10 @@ module MailHandlerPatch
 
 				when "PGP/INLINE"
 
+					Rails.logger.info "Encryption detected: PGP/INLINE"
+
 					# decrypt message
-					@plain_text_body = decrypt(@plain_text_body.match(@regex_pgpmsg)[0]).strip!
+					@plain_text_body = decrypt(@plain_text_body.match(@regex_pgpmsg)[0]).force_encoding("UTF-8").strip!
 
 				end
 			end
@@ -86,36 +98,64 @@ module MailHandlerPatch
 
 		def add_attachments_with_decryption(obj)
 
+			# delete certain files, which should not be attached
+			if email.has_attachments?
+				attachment_parts = email.parts.select {|p| p.attachment?(p) }
+				email.attachments.each do |attachment|
+					unless attachment.original_filename.match(@regex_remove_attachments).nil?
+						Rails.logger.info "Deleting Attachment: #{attachment.original_filename}"
+						attachment_part = attachment_parts.detect {
+							|p| p.header['content-disposition']['filename'] == attachment.original_filename 
+						}
+						Rails.logger.info "Part with this attachment: #{attachment_part}"
+						email.parts.try(:delete, attachment_part)
+					end
+				end
+			end
+
 			if @decryption and email.has_attachments?
 				attachment_parts = email.parts.select {|p| p.attachment?(p) }
 				email.attachments.each do |attachment|
 					unless attachment.original_filename.match(@regex_pgpext).nil?
 
 						Rails.logger.info "Encrytped Attachment (Plain) detected"
-						
-						# create new attachment
-						filename = attachment.original_filename.gsub(@regex_pgpext, '')
-						attachment.rewind
-						file = TMail::Attachment.new()
-						file.string = decrypt(attachment.string)
-						file.class.class_eval { attr_accessor :original_filename, :content_type }
-						file.original_filename = filename
-						file.content_type = attachment.content_type
 
-						# attach new attachment
-						Attachment.create(
-							:container => obj,
-							:file => file,
-							:filename => filename,
-							:author => user,
-							:content_type => attachment.content_type
-						)
+						begin 
 
-						# delete old attachment
-						attachment_part = attachment_parts.detect {
-							|p| p.header['content-disposition']['filename'] == attachment.original_filename 
-						}
-						email.parts.try(:delete, attachment_part)
+							# create new attachment
+							filename = attachment.original_filename.gsub(@regex_pgpext, '')
+							attachment.rewind
+							file = TMail::Attachment.new()
+							file.string = decrypt(attachment.string)
+							file.class.class_eval { attr_accessor :original_filename, :content_type }
+							file.original_filename = filename
+							file.content_type = attachment.content_type
+
+							# attach new attachment
+							Attachment.create(
+								:container => obj,
+								:file => file,
+								:filename => filename,
+								:author => user,
+								:content_type => attachment.content_type
+							)
+
+							# delete old attachment
+							attachment_part = attachment_parts.detect {
+								|p| p.header['content-disposition']['filename'] == attachment.original_filename 
+							}
+							email.parts.try(:delete, attachment_part)
+
+						rescue => e
+
+							# delete not encryptable attachment (probably signature)
+							Rails.logger.warn "Could not encrpyt attachment: #{e}"
+							attachment_part = attachment_parts.detect {
+								|p| p.header['content-disposition']['filename'] == attachment.original_filename 
+							}
+							email.parts.try(:delete, attachment_part)
+
+						end
 
 					end
 				end

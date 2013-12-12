@@ -130,7 +130,7 @@ module MailerPatch
 		def import_key_user(recipient)
 
 			# get key from DB
-			key = User.find_by_mail(recipient).try(
+			key = User.find_by_mail(recipient[0]).try(
 				:custom_value_for, 
 				Setting.plugin_chiliproject_encrypted_email_notifications['cfKey']
 			).try(:value)

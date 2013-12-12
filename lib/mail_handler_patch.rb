@@ -33,7 +33,6 @@ module MailHandlerPatch
 			@regex_pgpmsg = /-----BEGIN PGP MESSAGE-----.*-----END PGP MESSAGE-----/m
 			@regex_pgpext = Regexp.new pgp_inline_filename_extensions * "|" + "$"
 			@regex_remove_attachments = Regexp.new "^" + remove_attachments * "|" + "$"
-			Rails.logger.info "Rexex Attachment: #{@regex_remove_attachments.inspect}"
 
 		end
 
@@ -103,11 +102,10 @@ module MailHandlerPatch
 				attachment_parts = email.parts.select {|p| p.attachment?(p) }
 				email.attachments.each do |attachment|
 					unless attachment.original_filename.match(@regex_remove_attachments).nil?
-						Rails.logger.info "Deleting Attachment: #{attachment.original_filename}"
+						Rails.logger.info "Deleting Attachment (filtered out): #{attachment.original_filename}"
 						attachment_part = attachment_parts.detect {
 							|p| p.header['content-disposition']['filename'] == attachment.original_filename 
 						}
-						Rails.logger.info "Part with this attachment: #{attachment_part}"
 						email.parts.try(:delete, attachment_part)
 					end
 				end
@@ -149,7 +147,7 @@ module MailHandlerPatch
 						rescue => e
 
 							# delete not encryptable attachment (probably signature)
-							Rails.logger.warn "Could not encrpyt attachment: #{e}"
+							Rails.logger.warn "Deleting Attachment: #{attachment.original_filename}"
 							attachment_part = attachment_parts.detect {
 								|p| p.header['content-disposition']['filename'] == attachment.original_filename 
 							}

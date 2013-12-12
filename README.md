@@ -21,9 +21,9 @@ Details
 
 * mails send to user:
   * PGP/MIME
-* mails received from user: 
+* mails received from user (expected to be UTF-8): 
   * PGP/MIME
-  * PGP/Inline (filename extensions for attachments: '.pgp', '.gpg', '.asc')
+  * PGP/Inline (filename extensions for encrypted attachments: '.pgp', '.gpg', '.asc')
 
 ### Filters available
 

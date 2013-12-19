@@ -74,11 +74,11 @@ module MailerPatch
 			end
 			if (isPub and encPub == "project") or (isPri and encPri == "project")
 				if project.module_enabled?('chiliproject_encrypted_email_notifications')
-					@encryption['encrypt'] = true if (
-						User.find_by_mail(recipient).try(
+					@encryption['encrypt'] = true if ( 
+						User.find_by_mail(@recipients[0]).try(
 							:custom_value_for, 
 							Setting.plugin_chiliproject_encrypted_email_notifications['cfEncrypt']
-						).try(:value) == '1'
+						).try(:value) == '1' 
 					)
 				end
 			end

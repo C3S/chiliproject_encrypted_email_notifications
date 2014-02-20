@@ -158,21 +158,21 @@ module MailerPatch
 			self.part 'application/pgp-encrypted' do |p|
 				p.headers['Content-Description'] = 'PGP/MIME Versions Identification'
 				p.transfer_encoding = '7bit'
-				p.charset = "utf-8"
+				p.charset = "UTF-8"
 				p.body = "Version: 1\n"
 			end
 			self.part 'application/octet-stream; name="encrypted.asc"' do |p|
 				p.headers['Content-Description'] = 'OpenPGP encrypted message'
 				p.headers['Content-Disposition'] = 'inline; filename="encrypted.asc"'
 				p.transfer_encoding = '7bit'
-				p.charset = "utf-8"
+				p.charset = "UTF-8"
 				p.body render(
 					:file => "#{method_name}.text.plain.rhtml", 
 					:body => self.body, 
 					:layout => 'mailer.text.plain.erb'
 				)
-				p.body "-----BEGIN PGP MESSAGE-----\n\n" +
-					encrypt(p.body.to_s, self.recipients) +
+				p.body "-----BEGIN PGP MESSAGE-----\nCharset: UTF-8\n\n" +
+					encrypt("Content-Type: text/plain; charset=UTF-8\n\n" + p.body.to_s, self.recipients) +
 					"\n-----END PGP MESSAGE-----\n"
 			end
 			#self.body.preamble "This is an OpenPGP/MIME encrypted message (RFC 2440 and 3156)"

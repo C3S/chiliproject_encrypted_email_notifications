@@ -102,14 +102,17 @@ module MailHandlerPatch
         attachment_parts = email.parts.select {|p| p.attachment?(p) }
         email.attachments.each do |attachment|
           unless attachment.original_filename.match(@regex_remove_attachments).nil?
-            Rails.logger.info "Deleting Attachment (filtered out): #{attachment.original_filename}"
             attachment_part = attachment_parts.detect {
-              |p| p.header['content-disposition']['filename'] == attachment.original_filename 
+              |p| p.header['content-type'].try(:[], 'name') == attachment.original_filename
             }
-            email.parts.try(:delete, attachment_part)
+            if attachment_part.present?
+              email.parts.try(:delete, attachment_part)
+              Rails.logger.info "Deleting Attachment (filtered out): #{attachment.original_filename}"
+            end
           end
         end
       end
+
 
       if @decryption and email.has_attachments?
         attachment_parts = email.parts.select {|p| p.attachment?(p) }
@@ -146,7 +149,7 @@ module MailHandlerPatch
 
             rescue => e
 
-              # delete not encryptable attachment (probably signature)
+              # delete not decryptable attachment (probably signature)
               Rails.logger.warn "Deleting Attachment: #{attachment.original_filename}"
               attachment_part = attachment_parts.detect {
                 |p| p.header['content-disposition']['filename'] == attachment.original_filename 

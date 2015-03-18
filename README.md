@@ -45,6 +45,12 @@ Details
   * Issue Title
   * Issue Attributes
 
+### Additional Headers (currently no filter)
+
+* Updated-By
+* Status
+* Priority
+
 
 Dependencies
 ------------

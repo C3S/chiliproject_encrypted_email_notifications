@@ -1,3 +1,10 @@
+-----
+
+**ChiliProject is abandoned. A rewrite for Redmine is available [here](https://github.com/C3S/redmine_openpgp)**
+
+-----
+
+
 ChiliProject Encrypted Email Notifications
 ==========================================
 
